@@ -51,5 +51,3 @@ build:
 	echo "Attach Disk"
 	"$(VBM)" storagectl "$(VM)" --name ATA --add sata --controller IntelAHCI --portcount 1 --hostiocache on --bootable on
 	"$(VBM)" storageattach "$(VM)" --storagectl ATA --port 0 --device 0 --type hdd --medium "$(VMDK)"
-	echo "Run VM"
-	"$(VBM)" startvm "$(VM)"
