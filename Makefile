@@ -3,7 +3,10 @@ VMDK=$(VM).vmdk
 VBM=VBoxManage
 VB_AUDIO=pulse
 
-all:
+run:
+	"$(VBM)" startvm "$(VM)"
+
+build:
 	echo "Delete VM"
 	-"$(VBM)" unregistervm "$(VM)" --delete; \
 	if [ $$? -ne 0 ]; \
@@ -14,10 +17,12 @@ all:
 			$(RM) -rf "$$HOME/VirtualBox VMs/$(VM)"; \
 		fi \
 	fi
+	echo "Copy disk"
+	cp $(VM)_original.vmdk $(VM).vmdk
 	echo "Create VM"
 	"$(VBM)" createvm --name "$(VM)" --register
 	echo "Set Configuration"
-	"$(VBM)" modifyvm "$(VM)" --ostype MacOS1013_64
+	"$(VBM)" modifyvm "$(VM)" --ostype MacOS_64
 	"$(VBM)" modifyvm "$(VM)" --memory 4096
 	"$(VBM)" modifyvm "$(VM)" --vram 128
 	"$(VBM)" modifyvm "$(VM)" --cpus 2
@@ -30,9 +35,9 @@ all:
 		"$(VBM)" modifyvm "$(VM)" --nictype1 82545EM; \
 		"$(VBM)" modifyvm "$(VM)" --cableconnected1 on; \
 	fi
-	"$(VBM)" modifyvm "$(VM)" --usb on
-	"$(VBM)" modifyvm "$(VM)" --keyboard ps2
-	"$(VBM)" modifyvm "$(VM)" --mouse ps2
+	"$(VBM)" modifyvm "$(VM)" --usbxhci on
+	"$(VBM)" modifyvm "$(VM)" --keyboard usb
+	"$(VBM)" modifyvm "$(VM)" --mouse usbtablet
 	"$(VBM)" modifyvm "$(VM)" --audio $(VB_AUDIO)
 	"$(VBM)" modifyvm "$(VM)" --audiocontroller hda
 	"$(VBM)" modifyvm "$(VM)" --nestedpaging on
