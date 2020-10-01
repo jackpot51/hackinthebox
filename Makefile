@@ -55,5 +55,5 @@ build:
 		"$(VBM)" closemedium disk "$(VDI)" --delete; \
 	fi
 	"$(VBM)" createmedium disk --filename "$(VDI)" --size 131072 --format VDI
-	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 0 --device 0 --type hdd --medium "$(VDI)"
+	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 0 --device 0 --type hdd --nonrotational --medium "$(VDI)"
 	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 1 --device 0 --type dvddrive --medium "$(ISO)"
