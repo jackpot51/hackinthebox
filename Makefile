@@ -1,11 +1,13 @@
 VM=macOS
-VMDK=$(VM).vmdk
+ISO=$(VM).iso
+VDI=$(VM).vdi
 VBM=VBoxManage
 VB_AUDIO=pulse
 
 run:
 	"$(VBM)" startvm "$(VM)"
 
+#TODO: automatic extensions install?
 build:
 	echo "Delete VM"
 	-"$(VBM)" unregistervm "$(VM)" --delete; \
@@ -17,15 +19,13 @@ build:
 			$(RM) -rf "$$HOME/VirtualBox VMs/$(VM)"; \
 		fi \
 	fi
-	echo "Copy disk"
-	cp $(VM)_original.vmdk $(VM).vmdk
 	echo "Create VM"
 	"$(VBM)" createvm --name "$(VM)" --register
 	echo "Set Configuration"
 	"$(VBM)" modifyvm "$(VM)" --ostype MacOS_64
-	"$(VBM)" modifyvm "$(VM)" --memory 4096
+	"$(VBM)" modifyvm "$(VM)" --memory 8192
 	"$(VBM)" modifyvm "$(VM)" --vram 128
-	"$(VBM)" modifyvm "$(VM)" --cpus 2
+	"$(VBM)" modifyvm "$(VM)" --cpus 4
 	"$(VBM)" modifyvm "$(VM)" --rtcuseutc on
 	"$(VBM)" modifyvm "$(VM)" --firmware efi
 	"$(VBM)" modifyvm "$(VM)" --chipset ich9
@@ -48,6 +48,8 @@ build:
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
-	echo "Attach Disk"
-	"$(VBM)" storagectl "$(VM)" --name ATA --add sata --controller IntelAHCI --portcount 1 --hostiocache on --bootable on
-	"$(VBM)" storageattach "$(VM)" --storagectl ATA --port 0 --device 0 --type hdd --medium "$(VMDK)"
+	echo "Attach Disks"
+	"$(VBM)" storagectl "$(VM)" --name SATA --add sata --controller IntelAHCI --portcount 2 --hostiocache on --bootable on
+	"$(VBM)" createmedium disk --filename "$(VDI)" --size 131072 --format VDI
+	"$(VBM)" storageattach "$(VM)" --storagectl ATA --port 0 --device 0 --type hdd --medium "$(VDI)"
+	"$(VBM)" storageattach "$(VM)" --storagectl ATA --port 1 --device 0 --type dvddrive --medium "$(ISO)"
