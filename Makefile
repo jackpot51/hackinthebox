@@ -50,6 +50,10 @@ build:
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
 	echo "Attach Disks"
 	"$(VBM)" storagectl "$(VM)" --name SATA --add sata --controller IntelAHCI --portcount 2 --hostiocache on --bootable on
+	if [ -e "$(VDI)" ]; \
+	then \
+		"$(VBM)" closemedium disk "$(VDI)" --delete; \
+	fi
 	"$(VBM)" createmedium disk --filename "$(VDI)" --size 131072 --format VDI
-	"$(VBM)" storageattach "$(VM)" --storagectl ATA --port 0 --device 0 --type hdd --medium "$(VDI)"
-	"$(VBM)" storageattach "$(VM)" --storagectl ATA --port 1 --device 0 --type dvddrive --medium "$(ISO)"
+	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 0 --device 0 --type hdd --medium "$(VDI)"
+	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 1 --device 0 --type dvddrive --medium "$(ISO)"
