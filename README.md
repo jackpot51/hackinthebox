@@ -10,3 +10,8 @@ https://www.virtualbox.org/wiki/Downloads
 `make build` - to build the VM
 
 `make run` - to run the VM
+
+The default resolution is 1920x1080. If you would like to change that, instead
+run with the following:
+
+`make run RESOLUTION=2560x1440`
