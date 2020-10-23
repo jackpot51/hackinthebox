@@ -1,3 +1,5 @@
+RESOLUTION?=1920x1080
+
 VM=macOS
 ISO=$(VM).iso
 VDI=$(VM).vdi
@@ -5,6 +7,7 @@ VBM=VBoxManage
 VB_AUDIO=pulse
 
 run:
+	"$(VBM)" setextradata "$(VM)" "VBoxInternal2/EfiGraphicsResolution" "$(RESOLUTION)"
 	"$(VBM)" startvm "$(VM)"
 
 #TODO: automatic extensions install?
