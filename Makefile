@@ -46,9 +46,10 @@ build:
 	"$(VBM)" modifyvm "$(VM)" --nestedpaging on
 	echo "Magic"
 	"$(VBM)" modifyvm "$(VM)" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
-	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
+	"$(VBM)" modifyvm "$(VM)" --cpu-profile "Intel Core i7-6700K"
+	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac19,1"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
-	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
+	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Mac-AA95B1DDAB278B95"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
 	echo "Attach Disks"
@@ -58,5 +59,5 @@ build:
 		"$(VBM)" closemedium disk "$(VDI)" --delete; \
 	fi
 	"$(VBM)" createmedium disk --filename "$(VDI)" --size 131072 --format VDI
-	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 0 --device 0 --type hdd --nonrotational on --medium "$(VDI)"
-	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 1 --device 0 --type dvddrive --medium "$(ISO)"
+	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 0 --device 0 --type dvddrive --medium "$(ISO)"
+	"$(VBM)" storageattach "$(VM)" --storagectl SATA --port 1 --device 0 --type hdd --nonrotational on --medium "$(VDI)"

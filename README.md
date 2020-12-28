@@ -1,7 +1,7 @@
 # Hackintosh inside VirtualBox
 
 To start, download the macOS Catalina ISO from
-https://www.wikigain.com/install-macos-catalina-on-virtualbox-on-windows/,
+https://www.wikigain.com/how-to-install-macos-big-sur-on-virtualbox-on-windows-pc/
 and place it at `macOS.iso`
 
 Make sure to install the VirtualBox extension pack from:
