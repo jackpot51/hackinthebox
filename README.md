@@ -1,6 +1,6 @@
 # Hackintosh inside VirtualBox
 
-To start, download the macOS Catalina ISO from
+To start, download the macOS Big Sur ISO from
 https://www.wikigain.com/how-to-install-macos-big-sur-on-virtualbox-on-windows-pc/
 and place it at `macOS.iso`
 
