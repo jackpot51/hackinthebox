@@ -44,6 +44,11 @@ build:
 	"$(VBM)" modifyvm "$(VM)" --audio $(VB_AUDIO)
 	"$(VBM)" modifyvm "$(VM)" --audiocontroller hda
 	"$(VBM)" modifyvm "$(VM)" --nestedpaging on
+	echo "Boot Order"
+	"$(VBM)" modifyvm "$(VM)" --boot1 dvd
+	"$(VBM)" modifyvm "$(VM)" --boot2 disk
+	"$(VBM)" modifyvm "$(VM)" --boot3 none
+	"$(VBM)" modifyvm "$(VM)" --boot4 none
 	echo "Magic"
 	"$(VBM)" modifyvm "$(VM)" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
 	"$(VBM)" modifyvm "$(VM)" --cpu-profile "Intel Core i7-6700K"
@@ -52,6 +57,7 @@ build:
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Mac-AA95B1DDAB278B95"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 	"$(VBM)" setextradata "$(VM)" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
+	"$(VBM)" setextradata "$(VM)" "VBoxInternal/TM/TSCMode" "RealTSCOffset"
 	echo "Attach Disks"
 	"$(VBM)" storagectl "$(VM)" --name SATA --add sata --controller IntelAHCI --portcount 2 --hostiocache on --bootable on
 	if [ -e "$(VDI)" ]; \
