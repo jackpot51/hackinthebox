@@ -1,7 +1,7 @@
 # Hackintosh inside VirtualBox
 
-To start, download the macOS Big Sur ISO from
-https://www.wikigain.com/how-to-install-macos-big-sur-on-virtualbox-on-windows-pc/
+To start, download the macOS ISO from
+https://www.wikigain.com/install-macos-monterey-on-virtualbox/
 and place it at `macOS.iso`
 
 Make sure to install the VirtualBox extension pack from:
